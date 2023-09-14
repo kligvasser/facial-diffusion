@@ -1,5 +1,12 @@
 # Facial Diffussion
 
+
+Input condition (clip-landmark-arcface):
+![Screenshot](images/input.png)
+
+Sample:
+![Screenshot](images/output.png)
+
 Installing:
 ```
 conda env create -f environment.yaml
@@ -11,7 +18,6 @@ Optional:
 pip install -U xformers
 ```
 
-Running:
+Training:
 ```
-accelerate launch --config_file configs/accelerate.yaml train_conditioned.py --config ./configs/ffhq-vae-dense.yaml
-```
+accelerate launch --config_file configs/accelerate.yaml train_conditioned.py --config ./configs/ffhq-vqvae-clip.yaml
