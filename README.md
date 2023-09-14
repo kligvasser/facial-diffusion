@@ -1,4 +1,8 @@
 # Facial Diffussion
+Welcome to the Conditional Diffusion Model Training Repository!
+
+
+Explore the world of diffusion models with conditional input. Several trained models are available in the Diffuser Hub. For detailed guidance, refer to the "Run-a-Model" notebook provided. Additionally, you can easily access and download the Facial 40 Attributes model from this [repository](https://github.com/kligvasser/facial-attributes). Here, "landmark" are 468 XYZ facial points extracted by the Google [MediaPipe](https://github.com/google/mediapipe) model. 
 
 
 Input condition (clip-landmark-arcface):
