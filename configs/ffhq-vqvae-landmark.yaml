@@ -1,0 +1,81 @@
+output_dir: './results/ffhq-vqvae-landmark'
+
+train_data:
+  model_name: ImageLandmarks
+  batch_size: 16
+  num_workers: 8
+  configuration: 
+    df_path: '/storage13/datasets/facial-hq/train/landmarks-ffhq-97063.pkl'
+    image_size: 256
+    max_size: null
+
+validation_data:
+  model_name: ImageLandmarks
+  batch_size: 16
+  configuration: 
+    df_path: '/storage13/datasets/facial-hq/test/landmarks.pkl'
+    image_size: 256
+    max_size: 512
+
+training:
+  seed: 1234
+  gradient_accumulation_steps: 1
+  learning_rate: 1.0e-06
+  lr_scheduler: 'cosine'
+  lr_warmup_steps: 100
+  num_epochs: 100
+  save_image_epochs: 1
+  save_model_epochs: 10
+  mixed_precision: 'fp16'
+  enable_xformers_memory_efficient_attention: False
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_weight_decay: 1e-2
+  adam_epsilon: 1e-08
+  max_grad_norm: 1.0
+  scale_lr: True
+  resume_from_checkpoint: null
+  num_inference_steps: 200
+
+unet:
+  num_timesteps: 1000
+  configuration:
+    sample_size: 64
+    in_channels: 3
+    out_channels: 3
+    attention_head_dim: 32
+    cross_attention_dim: 1404
+    layers_per_block: 2
+    block_out_channels: 
+      - 256
+      - 512
+      - 512
+      - 768
+    down_block_types:
+      - 'DownBlock2D'
+      - 'AttnDownBlock2D'
+      - 'AttnDownBlock2D'
+      - 'AttnDownBlock2D'
+    up_block_types:
+      - 'AttnUpBlock2D'
+      - 'AttnUpBlock2D'
+      - 'AttnUpBlock2D'
+      - 'UpBlock2D'
+
+scheduler:
+  configuration:
+    num_train_timesteps: 1000
+    beta_start: 0.0015
+    beta_end: 0.0195
+
+vqvae:
+  model_name: 'CompVis/ldm-celebahq-256'
+
+embbeder:
+  model_name: IdentEmbedder
+  extract_keys:
+    - 'dense'
+  configuration:
+    extract_keys:
+      - 'dense'
+

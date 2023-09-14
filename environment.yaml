@@ -1,0 +1,30 @@
+name: diffusers
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.8.5
+  - pip=20.3
+  - cudatoolkit=11.3
+  - pip:
+    - numpy
+    - torch
+    - torchvision
+    - diffusers[torch]
+    - transformers
+    - clip
+    - xformers
+    - accelerate
+    - tensorboard
+    - omegaconf
+    - einops
+    - tqdm
+    - pandas
+    - opencv-python
+    - imageio
+    - imageio-ffmpeg
+    - lmdb
+    - -e git+https://github.com/openai/CLIP.git@main#egg=clip
+
+
+  
