@@ -38,9 +38,8 @@ class DINOEmbedder(torch.nn.Module):
         self.dino = torch.hub.load('facebookresearch/dino:main', 'dino_vits16')
         self.dino.head = torch.nn.Identity()
         self.dino.eval()
-        for module in [self.dino]:
-            for param in module.parameters():
-                param.requires_grad = False
+        for param in self.dino.parameters():
+            param.requires_grad = False
 
         self.register_buffer('mean', torch.Tensor(IMAGENET_MEAN).view(1, 3, 1, 1))
         self.register_buffer('std', torch.Tensor(IMAGENET_STD).view(1, 3, 1, 1))
@@ -68,9 +67,8 @@ class CLIPImageEmbedder(torch.nn.Module):
         self.extract_keys = extract_keys
         self.clip, _ = clip.load(model_name)
         self.clip.eval()
-        for module in [self.clip]:
-            for param in module.parameters():
-                param.requires_grad = False
+        for param in self.clip.parameters():
+            param.requires_grad = False
 
         self.register_buffer('mean', torch.Tensor(IMAGENET_MEAN).view(1, 3, 1, 1))
         self.register_buffer('std', torch.Tensor(IMAGENET_STD).view(1, 3, 1, 1))
@@ -118,9 +116,8 @@ class AttributeEmbedder(torch.nn.Module):
         self.attr = TransferModel(backbone=torch_models.resnet50(pretrained=True), num_classes=40)
         self.attr.load_state_dict(torch.load(path))
         self.attr.eval()
-        for module in [self.attr]:
-            for param in module.parameters():
-                param.requires_grad = False
+        for param in self.attr.parameters():
+            param.requires_grad = False
 
         self.register_buffer('mean', torch.Tensor(IMAGENET_MEAN).view(1, 3, 1, 1))
         self.register_buffer('std', torch.Tensor(IMAGENET_STD).view(1, 3, 1, 1))
@@ -150,9 +147,8 @@ class ArcFaceEmbedder(torch.nn.Module):
         self.facenet = Backbone(input_size=112, num_layers=50, drop_ratio=0.6, mode='ir_se')
         self.facenet.load_state_dict(torch.load(path))
         self.facenet.eval()
-        for module in [self.facenet]:
-            for param in module.parameters():
-                param.requires_grad = False
+        for param in self.facenet.parameters():
+            param.requires_grad = False
 
     def _preprocess(self, x):
         # x in [-1 1]
