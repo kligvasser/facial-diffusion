@@ -150,7 +150,7 @@ class ArcFaceEmbedder(torch.nn.Module):
         self.facenet = Backbone(input_size=112, num_layers=50, drop_ratio=0.6, mode='ir_se')
         self.facenet.load_state_dict(torch.load(path))
         self.facenet.eval()
-        for module in [self.facenet, self.face_pool]:
+        for module in self.facenet:
             for param in module.parameters():
                 param.requires_grad = False
 
